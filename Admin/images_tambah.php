@@ -1,7 +1,8 @@
-<?php $title = "Tambah | Kamar";
+<?php $title = "Tambah | Image";
 require_once("./Templates/header.php");
+$movies = many("SELECT * FROM `movies`");
 if (isset($_POST['submit'])) {
-        tambah_kamar($_POST, $_FILES['image']);
+        tambah_images($_POST, $_FILES['image']);
 }
 ?>
 <!-- Content -->
@@ -9,7 +10,7 @@ if (isset($_POST['submit'])) {
 
         <div class="page-header d-md-flex justify-content-between">
                 <div>
-                        <h3>Tambah Kamar</h3>
+                        <h3>Tambah Images</h3>
                 </div>
         </div>
 
@@ -20,16 +21,16 @@ if (isset($_POST['submit'])) {
                                 <div class="card-body">
                                         <form action="" method="POST" enctype="multipart/form-data">
                                                 <div class="form-group">
-                                                        <label for="tambahKamar">No Kamar</label>
-                                                        <input name="no_kamar" type="text" class="form-control" id="tambahKamar" placeholder="Enter No Kamar">
+                                                        <label for="tambahMovie">Movie</label>
+                                                        <select name="movie" id="tambahMovie" class="form-control">
+                                                                <?php foreach ($movies as $v) : ?>
+                                                                        <option value="<?= $v['id'] ?>"><?= $v['name'] ?></option>
+                                                                <?php endforeach ?>
+                                                        </select>
                                                 </div>
                                                 <div class="form-group">
-                                                        <label for="tambahJenis">Jenis</label>
-                                                        <input name="jenis" type="text" class="form-control" id="tambahJenis" placeholder="Enter Jenis">
-                                                </div>
-                                                <div class="form-group">
-                                                        <label for="tambahHarga">Harga</label>
-                                                        <input name="harga" type="text" class="form-control" id="tambahHarga" placeholder="Enter Harga">
+                                                        <label for="tambahAlt">Alt</label>
+                                                        <input name="alt" type="text" class="form-control" id="tambahAlt" placeholder="Enter Alt">
                                                 </div>
                                                 <div class="form-group">
                                                         <label for="customFileUpdate">Gambar</label>

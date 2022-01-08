@@ -48,22 +48,21 @@ function hapus($data, $tb)
         }
 }
 
-function tambah_kamar($data, $file)
+function tambah_images($data, $file)
 {
         global $connect;
-        $no_kamar = $data['no_kamar'];
-        $jenis = $data['jenis'];
-        $harga = $data['harga'];
+        $movie = $data['movie'];
+        $alt = $data['alt'];
 
         $filename = date('Y-m-d') . $file['name'];
         $tempname =  $file['tmp_name'];
-        $folder = "image/" . $filename;
+        $folder = "../images/" . $filename;
 
 
-        $sql = mysqli_query($connect, "INSERT INTO `tbl_kamar` (`no_kamar`, `jenis`, `harga`, `image`) VALUES (" . $no_kamar . ",'" . $jenis . "','" . $harga . "','" . $filename . "')");
+        $sql = mysqli_query($connect, "INSERT INTO `images` (`movie_id`, `alt`, `source`) VALUES (" . $movie . ",'" . $alt . "','" . $filename . "')");
         if ($sql) {
                 if (move_uploaded_file($tempname, $folder)) {
-                        echo "<script>window.location.replace('kamar.php');</script>";
+                        echo "<script>window.location.replace('Images.php');</script>";
                 } else {
                         echo "<script>alert('Gagal Tambah Image')</script>";
                 }
