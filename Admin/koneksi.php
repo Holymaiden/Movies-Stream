@@ -131,20 +131,37 @@ function tambah_movies($data, $image, $movie)
         }
 }
 
-function edit_transaksi($data)
+function edit_movies($data, $image, $movie)
 {
         global $connect;
-        $pelanggan = $data['pelanggan'];
+        $name = $data['name'];
+        $category = $data['category'];
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+        $story = $data['story'];
         $date = $data['date'];
-        $bayar = $data['bayar'];
+        $director = $data['director'];
+        $country = $data['country'];
+        $status = $data['status'];
+
+        $filename = date('Y-m-d') . $image['name'];
+        $tempname =  $image['tmp_name'];
+        $folder = "../images/" . $filename;
+
+        $moviename = date('Y-m-d') . $movie['name'];
+        $tempmovie =  $movie['tmp_name'];
+        $foldermovie = "../videos/" . $moviename;
 
         $date = strtotime($date);
-        $date = date('Y-m-d H:i:s', $date);
+        $date = date('Y-m-d', $date);
 
-        $sql = mysqli_query($connect, "UPDATE `tbl_transaksi` SET `pelanggan_id`=" . $pelanggan . ", `kapan_bayar`='" . $date . "', `bayar`=" . $bayar . " WHERE id=" . $data['id'] . "");
+        $sql = mysqli_query($connect, "UPDATE `movies` SET `name`='" . $name . "', `slug`='" . $slug . "', `category_id`=" . $category . ",`story`='" . $story . "',`release_date`='" . $date . "',`director`='" . $director . "',`country`='" . $country . "',`image`='" . $filename . "',`video`='" . $moviename . "',`status`='" . $status . "' WHERE id=" . $data['id'] . "");
         if ($sql) {
-                echo "<script>window.location.replace('transaksi.php');</script>";
+                if (move_uploaded_file($tempname, $folder) && move_uploaded_file($tempmovie, $foldermovie)) {
+                        echo "<script>window.location.replace('movies.php');</script>";
+                } else {
+                        echo "<script>alert('Image atau Video Gagal Diedit')</script>";
+                }
         } else {
-                echo "<script>alert('Gagal Tambah Data')</script>";
+                echo "<script>alert('Data Gagal Diedit')</script>";
         }
 }
