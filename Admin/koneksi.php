@@ -39,7 +39,7 @@ function hapus($data, $tb)
         if ($sql) {
                 if ($tb == "users")
                         echo "<script>window.location.replace('users.php');</script>";
-                else if ($tb == "tbl_kamar")
+                else if ($tb == "images")
                         echo "<script>window.location.replace('kamar.php');</script>";
                 else
                         echo "<script>window.location.replace('movies.php');</script>";
