@@ -50,7 +50,16 @@ $movies = many("SELECT `movies`.*,`categorys`.`name` as `category_name` FROM `mo
                                                                         <tr>
                                                                                 <td></td>
                                                                                 <td><?= ++$i ?></td>
-                                                                                <td><?= $v['image'] ?></td>
+                                                                                <td>
+                                                                                        <figure class="avatar avatar-lg mr-2">
+                                                                                                <img src="../images/<?= $v['image'] ?>" class="rounded" alt="avatar">
+                                                                                        </figure>
+                                                                                </td>
+                                                                                <td>
+                                                                                        <div class="embed-responsive embed-responsive-16by9">
+                                                                                                <iframe class="embed-responsive-item" src="../videos/<?= $v['video'] ?>" allowfullscreen></iframe>
+                                                                                        </div>
+                                                                                </td>
                                                                                 <td><?= $v['video'] ?></td>
                                                                                 <td><?= $v['name'] ?></td>
                                                                                 <td><?= $v['category_name'] ?></td>
