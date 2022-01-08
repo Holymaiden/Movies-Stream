@@ -42,7 +42,7 @@ function hapus($data, $tb)
                 else if ($tb == "tbl_kamar")
                         echo "<script>window.location.replace('kamar.php');</script>";
                 else
-                        echo "<script>window.location.replace('transaksi.php');</script>";
+                        echo "<script>window.location.replace('movies.php');</script>";
         } else {
                 echo "<script>alert('Gagal Hapus Data')</script>";
         }
@@ -103,7 +103,7 @@ function tambah_movies($data, $image, $movie)
         $category = $data['category'];
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
         $story = $data['story'];
-        $release_date = $data['date'];
+        $date = $data['date'];
         $director = $data['director'];
         $country = $data['country'];
         $status = $data['status'];
@@ -116,7 +116,10 @@ function tambah_movies($data, $image, $movie)
         $tempmovie =  $movie['tmp_name'];
         $foldermovie = "../videos/" . $moviename;
 
-        $sql = mysqli_query($connect, "INSERT INTO `movies` (`name`, `slug`, `category_id`,`story`,`release_date`,`director`,`country`,`image`,`video`,`status`) VALUES ('" . $name . "','" . $slug . "'," . $category . ",'" . $story . "','" . $release_date . "','" . $director . "','" . $country . "','" . $filename . "','" . $moviename . "','" . $status . "')");
+        $date = strtotime($date);
+        $date = date('Y-m-d', $date);
+
+        $sql = mysqli_query($connect, "INSERT INTO `movies` (`name`, `slug`, `category_id`,`story`,`release_date`,`director`,`country`,`image`,`video`,`status`) VALUES ('" . $name . "','" . $slug . "'," . $category . ",'" . $story . "','" . $date . "','" . $director . "','" . $country . "','" . $filename . "','" . $moviename . "','" . $status . "')");
         if ($sql) {
                 if (move_uploaded_file($tempname, $folder) && move_uploaded_file($tempmovie, $foldermovie)) {
                         echo "<script>window.location.replace('movies.php');</script>";
