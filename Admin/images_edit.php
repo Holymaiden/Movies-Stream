@@ -1,8 +1,10 @@
-<?php $title = "Edit | Kamar";
+<?php $title = "Edit | Images";
 require_once("./Templates/header.php");
-$kamar = single("SELECT * FROM `tbl_kamar` WHERE id=" . $_GET['v'] . "");
+$movies = many("SELECT * FROM `movies`");
+$images = single("SELECT * FROM `images` WHERE id=" . $_GET['v'] . "");
+
 if (isset($_POST['submit'])) {
-        tambah_kamar($_POST, $_FILES['image']);
+        edit_images($_POST, $_FILES['image']);
 }
 ?>
 <!-- Content -->
@@ -10,7 +12,7 @@ if (isset($_POST['submit'])) {
 
         <div class="page-header d-md-flex justify-content-between">
                 <div>
-                        <h3>Edit Kamar</h3>
+                        <h3>Edit Images</h3>
                 </div>
         </div>
 
@@ -22,21 +24,21 @@ if (isset($_POST['submit'])) {
                                         <form action="" method="POST" enctype="multipart/form-data">
                                                 <input name="id" type="hidden" value="<?= $_GET['v'] ?>">
                                                 <div class="form-group">
-                                                        <label for="tambahKamar">No Kamar</label>
-                                                        <input name="no_kamar" type="text" class="form-control" id="tambahKamar" placeholder="Enter No Kamar" value="<?= $kamar['no_kamar'] ?>">
+                                                        <label for="updateMovie">Movie</label>
+                                                        <select name="movie" id="updateMovie" class="form-control">
+                                                                <?php foreach ($movies as $v) : ?>
+                                                                        <option <?php if ($images['movie_id'] == $v['id']) echo 'selected'  ?> value="<?= $v['id'] ?>"><?= $v['name'] ?></option>
+                                                                <?php endforeach ?>
+                                                        </select>
                                                 </div>
                                                 <div class="form-group">
-                                                        <label for="tambahJenis">Jenis</label>
-                                                        <input name="jenis" type="text" class="form-control" id="tambahJenis" placeholder="Enter Jenis" value="<?= $kamar['jenis'] ?>">
+                                                        <label for="updateAlt">Alt</label>
+                                                        <input name="alt" type="text" class="form-control" id="updateAlt" placeholder="Enter Alt" value="<?= $images['alt'] ?>">
                                                 </div>
-                                                <div class=" form-group">
-                                                        <label for="tambahHarga">Harga</label>
-                                                        <input name="harga" type="text" class="form-control" id="tambahHarga" placeholder="Enter Harga" value="<?= $kamar['harga'] ?>">
-                                                </div>
-                                                <div class=" form-group">
+                                                <div class="form-group">
                                                         <label for="customFileUpdate">Gambar</label>
                                                         <div class="custom-file">
-                                                                <input name="image" type="file" class="custom-file-input" id="customFileUpdate">
+                                                                <input name="image" type="file" class="custom-file-input" id="customFileUpdate" value="<?= $images['source'] ?>">
                                                                 <label class="custom-file-label" for="customFileUpdate">Choose Image</label>
                                                         </div>
                                                 </div>
